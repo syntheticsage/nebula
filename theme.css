@@ -1,0 +1,1120 @@
+/*
+ * Nebula — Obsidian theme
+ * Deep plum background, warm coral accent, subtle radial glow.
+ *
+ * Typography: Inter (UI/body) · Newsreader (serif italic) · JetBrains Mono (code)
+ * All fonts are bundled locally — no network requests at runtime.
+ * See fonts/LICENSES.md for font license attribution (all OFL).
+ */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/InterVariable.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/InterVariable-Italic.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/Newsreader-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Newsreader-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/Newsreader-400-Italic.woff2') format('woff2');
+}
+
+/* ==========================================================================
+   Palette — scoped to dark and light modes
+   ========================================================================== */
+
+.theme-dark {
+  --nebula-bg-0: #1A1527;
+  --nebula-bg-1: #241F31;
+  --nebula-bg-2: #2E293B;
+  --nebula-bg-3: #383346;
+  --nebula-glow: #4A2A66;
+  --nebula-accent: #FF5C45;
+  --nebula-accent-soft: rgba(255, 92, 69, 0.14);
+  --nebula-accent-dim: rgba(255, 92, 69, 0.55);
+  --nebula-accent-rgb: 255, 92, 69;
+
+  --nebula-text-0: #F5F3F7;
+  --nebula-text-1: #C7C2D4;
+  --nebula-text-2: #8B869B;
+  --nebula-text-3: #5C5770;
+  --nebula-text-4: #3E3A50;
+
+  --nebula-border: rgba(255, 255, 255, 0.06);
+  --nebula-border-strong: rgba(255, 255, 255, 0.10);
+
+  --nebula-code-str: #FF9B85;
+  --nebula-code-kw: #C39BFF;
+  --nebula-code-fn: #7ED1F2;
+  --nebula-code-comment: var(--nebula-text-3);
+  --nebula-sync-green: #6BE4A2;
+}
+
+.theme-light {
+  --nebula-bg-0: #F5F2EF;
+  --nebula-bg-1: #EDE8E4;
+  --nebula-bg-2: #E4DED8;
+  --nebula-bg-3: #D7D0C8;
+  --nebula-glow: #E6D4C0;
+  --nebula-accent: #E34A30;
+  --nebula-accent-soft: rgba(227, 74, 48, 0.12);
+  --nebula-accent-dim: rgba(227, 74, 48, 0.55);
+  --nebula-accent-rgb: 227, 74, 48;
+
+  --nebula-text-0: #1A1527;
+  --nebula-text-1: #2E2A3A;
+  --nebula-text-2: #6A6576;
+  --nebula-text-3: #8F8A9A;
+  --nebula-text-4: #BFBAC7;
+
+  --nebula-border: rgba(0, 0, 0, 0.07);
+  --nebula-border-strong: rgba(0, 0, 0, 0.12);
+
+  --nebula-code-str: #C23C1E;
+  --nebula-code-kw: #7A3FC1;
+  --nebula-code-fn: #1F7BA8;
+  --nebula-code-comment: var(--nebula-text-3);
+  --nebula-sync-green: #2F9E6A;
+}
+
+/* ==========================================================================
+   Map Nebula palette onto Obsidian's CSS variable system
+   ========================================================================== */
+
+.theme-dark,
+.theme-light {
+  /* Typography */
+  --font-interface-theme: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-text-theme: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-monospace-theme: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-text-size: 15px;
+  --line-height-normal: 1.7;
+  --line-height-tight: 1.25;
+
+  /* Backgrounds */
+  --background-primary: var(--nebula-bg-0);
+  --background-primary-alt: var(--nebula-bg-1);
+  --background-secondary: var(--nebula-bg-1);
+  --background-secondary-alt: var(--nebula-bg-2);
+  --background-modifier-border: var(--nebula-border);
+  --background-modifier-border-hover: var(--nebula-border-strong);
+  --background-modifier-border-focus: var(--nebula-accent-dim);
+  --background-modifier-hover: rgba(var(--nebula-accent-rgb), 0.06);
+  --background-modifier-active-hover: var(--nebula-accent-soft);
+  --background-modifier-form-field: var(--nebula-bg-2);
+  --background-modifier-box-shadow: rgba(0, 0, 0, 0.35);
+  --background-modifier-cover: rgba(10, 6, 20, 0.55);
+
+  /* Text */
+  --text-normal: var(--nebula-text-1);
+  --text-muted: var(--nebula-text-2);
+  --text-faint: var(--nebula-text-3);
+  --text-on-accent: #ffffff;
+  --text-accent: var(--nebula-accent);
+  --text-accent-hover: var(--nebula-accent);
+  --text-error: #FF6E6E;
+  --text-success: var(--nebula-sync-green);
+  --text-selection: var(--nebula-accent-soft);
+  --caret-color: var(--nebula-accent);
+
+  /* Headings */
+  --h1-color: var(--nebula-text-0);
+  --h2-color: var(--nebula-text-0);
+  --h3-color: var(--nebula-text-0);
+  --h4-color: var(--nebula-text-0);
+  --h5-color: var(--nebula-text-0);
+  --h6-color: var(--nebula-text-0);
+  --h1-weight: 700;
+  --h2-weight: 600;
+  --h3-weight: 600;
+  --h4-weight: 600;
+  --h5-weight: 600;
+  --h6-weight: 600;
+  --h1-size: 2.4em;
+  --h2-size: 1.55em;
+  --h3-size: 1.2em;
+  --h4-size: 1.05em;
+  --h5-size: 1em;
+  --h6-size: 0.95em;
+
+  /* Interactive */
+  --interactive-normal: var(--nebula-bg-2);
+  --interactive-hover: var(--nebula-bg-3);
+  --interactive-accent: var(--nebula-accent);
+  --interactive-accent-hover: var(--nebula-accent);
+  --interactive-success: var(--nebula-sync-green);
+
+  /* Links */
+  --link-color: var(--nebula-accent);
+  --link-color-hover: var(--nebula-accent);
+  --link-decoration: none;
+  --link-decoration-hover: none;
+  --link-external-color: var(--nebula-text-0);
+  --link-external-color-hover: var(--nebula-accent);
+  --link-unresolved-color: var(--nebula-text-3);
+  --link-unresolved-opacity: 0.85;
+  --link-unresolved-decoration-style: dashed;
+
+  /* Tags */
+  --tag-background: var(--nebula-accent-soft);
+  --tag-background-hover: var(--nebula-accent-soft);
+  --tag-color: var(--nebula-accent);
+  --tag-color-hover: var(--nebula-accent);
+  --tag-border-color: transparent;
+  --tag-border-color-hover: transparent;
+  --tag-padding-x: 8px;
+  --tag-padding-y: 2px;
+  --tag-radius: 999px;
+  --tag-weight: 500;
+  --tag-size: 0.82em;
+
+  /* Code */
+  --code-background: var(--nebula-bg-2);
+  --code-normal: var(--nebula-text-1);
+  --code-string: var(--nebula-code-str);
+  --code-keyword: var(--nebula-code-kw);
+  --code-comment: var(--nebula-code-comment);
+  --code-function: var(--nebula-code-fn);
+  --code-tag: var(--nebula-accent);
+  --code-property: var(--nebula-code-fn);
+  --code-value: var(--nebula-code-str);
+  --code-size: 0.88em;
+
+  /* Quote */
+  --blockquote-border-color: var(--nebula-accent-dim);
+  --blockquote-border-thickness: 3px;
+  --blockquote-color: var(--nebula-text-0);
+  --blockquote-background-color: transparent;
+  --blockquote-font-style: italic;
+
+  /* HR */
+  --hr-color: var(--nebula-border-strong);
+  --hr-thickness: 1px;
+
+  /* Table */
+  --table-header-background: var(--nebula-bg-1);
+  --table-header-color: var(--nebula-text-0);
+  --table-row-alt-background: rgba(255, 255, 255, 0.02);
+  --table-row-background-hover: rgba(var(--nebula-accent-rgb), 0.04);
+  --table-border-color: var(--nebula-border);
+  --table-header-weight: 600;
+
+  /* Checkbox */
+  --checkbox-color: var(--nebula-accent);
+  --checkbox-color-hover: var(--nebula-accent);
+  --checkbox-border-color: var(--nebula-text-3);
+  --checkbox-border-color-hover: var(--nebula-text-2);
+  --checkbox-marker-color: #ffffff;
+  --checkbox-radius: 50%;
+  --checkbox-size: 16px;
+
+  /* Callout baseline */
+  --callout-border-width: 1px;
+  --callout-border-opacity: 1;
+  --callout-padding: 14px 18px;
+  --callout-radius: 10px;
+  --callout-blend-mode: normal;
+
+  /* Layout radii */
+  --radius-s: 6px;
+  --radius-m: 8px;
+  --radius-l: 12px;
+
+  /* Scroll */
+  --scrollbar-bg: transparent;
+  --scrollbar-thumb-bg: rgba(255, 255, 255, 0.06);
+  --scrollbar-active-thumb-bg: rgba(255, 255, 255, 0.12);
+
+  /* Modal */
+  --modal-background: var(--nebula-bg-1);
+  --modal-border-color: var(--nebula-border-strong);
+  --modal-radius: 12px;
+
+  /* Ribbon */
+  --ribbon-background: var(--nebula-bg-1);
+  --ribbon-background-collapsed: var(--nebula-bg-1);
+
+  /* Titlebar */
+  --titlebar-background: var(--nebula-bg-1);
+  --titlebar-background-focused: var(--nebula-bg-1);
+  --titlebar-text-color: var(--nebula-text-2);
+  --titlebar-text-color-focused: var(--nebula-text-1);
+
+  /* Status bar */
+  --status-bar-background: var(--nebula-bg-1);
+  --status-bar-text-color: var(--nebula-text-3);
+  --status-bar-border-color: var(--nebula-border);
+  --status-bar-font-size: 11px;
+
+  /* Tabs */
+  --tab-background-active: var(--nebula-bg-0);
+  --tab-text-color: var(--nebula-text-2);
+  --tab-text-color-focused-active: var(--nebula-text-0);
+  --tab-text-color-focused-active-current: var(--nebula-text-0);
+  --tab-outline-color: var(--nebula-border);
+  --tab-outline-width: 1px;
+  --tab-curve: 6px;
+  --tab-font-size: 12.5px;
+
+  /* Icons */
+  --icon-color: var(--nebula-text-2);
+  --icon-color-hover: var(--nebula-text-0);
+  --icon-color-active: var(--nebula-accent);
+  --icon-color-focused: var(--nebula-accent);
+}
+
+/* ==========================================================================
+   Body — radial glow background
+   ========================================================================== */
+
+body.theme-dark,
+body.theme-light {
+  font-family: var(--font-text-theme);
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Paint the radial glow on the markdown view surface itself, since Obsidian's
+   panels paint solid backgrounds on top of .workspace. */
+.theme-dark .workspace-leaf-content[data-type="markdown"],
+.theme-dark .workspace-leaf-content[data-type="empty"],
+.theme-dark .workspace-leaf-content[data-type="file-explorer"] + .workspace-leaf-content,
+.theme-light .workspace-leaf-content[data-type="markdown"],
+.theme-light .workspace-leaf-content[data-type="empty"] {
+  background:
+    radial-gradient(1100px 700px at 18% 22%, color-mix(in oklab, var(--nebula-glow) 55%, transparent), transparent 60%),
+    radial-gradient(900px 600px at 82% 78%, color-mix(in oklab, var(--nebula-accent) 10%, transparent), transparent 60%),
+    var(--nebula-bg-0);
+}
+
+.theme-dark .markdown-source-view.mod-cm6,
+.theme-dark .markdown-preview-view,
+.theme-light .markdown-source-view.mod-cm6,
+.theme-light .markdown-preview-view {
+  background: transparent;
+}
+
+.theme-dark .cm-editor,
+.theme-light .cm-editor {
+  background: transparent;
+}
+
+/* Fallback: also paint it on .workspace so it peeks through gaps between panels. */
+.theme-dark .workspace,
+.theme-light .workspace {
+  background:
+    radial-gradient(1100px 700px at 18% 22%, color-mix(in oklab, var(--nebula-glow) 55%, transparent), transparent 60%),
+    radial-gradient(900px 600px at 82% 78%, color-mix(in oklab, var(--nebula-accent) 10%, transparent), transparent 60%),
+    var(--nebula-bg-0);
+}
+
+/* ==========================================================================
+   Sidebar — file tree, ribbon tabs, active item styling
+   ========================================================================== */
+
+.workspace-ribbon,
+.workspace-split.mod-left-split,
+.workspace-split.mod-right-split {
+  background-color: var(--nebula-bg-1);
+  border-color: var(--nebula-border);
+}
+
+.workspace-ribbon .side-dock-ribbon-action {
+  color: var(--nebula-text-3);
+  border-radius: 7px;
+}
+
+.workspace-ribbon .side-dock-ribbon-action:hover {
+  color: var(--nebula-text-1);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.workspace-ribbon .side-dock-ribbon-action.is-active {
+  color: var(--nebula-accent);
+  background-color: var(--nebula-accent-soft);
+}
+
+/* Nav file tree */
+.nav-files-container {
+  padding: 4px 6px;
+}
+
+.nav-folder-title,
+.nav-file-title {
+  border-radius: 6px;
+  color: var(--nebula-text-1);
+  font-size: 13.5px;
+  padding: 5px 8px 5px 10px;
+}
+
+.nav-folder-title {
+  font-weight: 500;
+}
+
+.nav-file-title:hover,
+.nav-folder-title:hover {
+  background-color: rgba(255, 255, 255, 0.035);
+  color: var(--nebula-text-0);
+}
+
+.nav-file-title.is-active,
+.nav-file-title.has-focus {
+  background-color: var(--nebula-accent-soft) !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-file-title.is-active::before,
+.nav-file-title.has-focus::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2.5px;
+  border-radius: 2px;
+  background: var(--nebula-accent);
+}
+
+.nav-folder-collapse-indicator,
+.nav-file-tag {
+  color: var(--nebula-text-3);
+}
+
+.nav-file-tag {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1px 6px;
+  border-radius: 10px;
+  color: var(--nebula-text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sidebar section headers (Pinned / Vault style) */
+.nav-header,
+.tree-item-self.mod-collapsible .tree-item-inner {
+  font-size: 13.5px;
+}
+
+.workspace-tab-header-container-inner,
+.side-dock-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--nebula-text-3);
+}
+
+/* Search input inside sidebar */
+.search-input-container input,
+input.search-input {
+  background: var(--nebula-bg-2);
+  border: 1px solid var(--nebula-border);
+  border-radius: 8px;
+  color: var(--nebula-text-1);
+  height: 32px;
+  font-size: 13px;
+}
+
+.search-input-container input:focus {
+  border-color: var(--nebula-accent-dim);
+  box-shadow: 0 0 0 3px var(--nebula-accent-soft);
+}
+
+/* ==========================================================================
+   Titlebar & tabs
+   ========================================================================== */
+
+.workspace-tabs .workspace-tab-header-container {
+  background: var(--nebula-bg-1);
+  border-bottom: 1px solid var(--nebula-border);
+}
+
+.workspace-tab-header {
+  color: var(--nebula-text-2);
+  font-size: 12.5px;
+  border-radius: 0;
+}
+
+.workspace-tab-header.is-active,
+.workspace-tab-header.mod-active,
+.workspace-tab-header.is-active.mod-active {
+  background-color: var(--nebula-bg-0) !important;
+  color: var(--nebula-text-0) !important;
+  box-shadow: inset 0 2px 0 0 var(--nebula-accent) !important;
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+.workspace-tab-header.mod-active .workspace-tab-header-inner-icon {
+  color: var(--nebula-accent);
+}
+
+.workspace-tab-header-inner-close-button {
+  color: var(--nebula-text-3);
+}
+
+.workspace-tab-header-inner-close-button:hover {
+  color: var(--nebula-text-0);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* View header (breadcrumb bar) */
+.view-header {
+  background: transparent;
+  border-bottom: 1px solid var(--nebula-border);
+  height: 36px;
+}
+
+.view-header-title {
+  color: var(--nebula-text-0);
+  font-weight: 500;
+}
+
+.view-header-breadcrumb {
+  color: var(--nebula-text-3);
+  font-size: 12px;
+}
+
+.view-header-breadcrumb-separator {
+  color: var(--nebula-text-3);
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   Editor — note header, body, typography
+   ========================================================================== */
+
+.markdown-source-view.mod-cm6,
+.markdown-preview-view {
+  padding: 6px 60px 60px;
+  max-width: none;
+}
+
+.markdown-source-view.mod-cm6 .cm-sizer,
+.markdown-preview-sizer {
+  max-width: 820px;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+.markdown-preview-view,
+.cm-line {
+  color: var(--nebula-text-1);
+  line-height: 1.7;
+}
+
+/* Title */
+.inline-title,
+.markdown-preview-view h1:first-child {
+  font-family: var(--font-text-theme);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--nebula-text-0);
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+
+.markdown-preview-view h2,
+.HyperMD-header-2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--nebula-text-0);
+  margin: 32px 0 10px;
+  letter-spacing: -0.015em;
+}
+
+.markdown-preview-view h3,
+.HyperMD-header-3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--nebula-text-0);
+  margin: 22px 0 6px;
+}
+
+.markdown-preview-view p {
+  margin: 0 0 14px;
+}
+
+.markdown-preview-view em,
+.cm-em {
+  font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+  font-style: italic;
+  color: var(--nebula-text-0);
+}
+
+.markdown-preview-view strong,
+.cm-strong {
+  color: var(--nebula-text-0);
+  font-weight: 600;
+}
+
+/* Internal (wikilink) */
+.internal-link,
+.cm-hmd-internal-link,
+.cm-underline {
+  color: var(--nebula-accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--nebula-accent-dim);
+  padding-bottom: 1px;
+}
+
+.internal-link:hover,
+.cm-hmd-internal-link:hover {
+  background: var(--nebula-accent-soft);
+  border-bottom-style: solid;
+  color: var(--nebula-accent);
+}
+
+.internal-link.is-unresolved {
+  color: var(--nebula-text-3);
+  border-bottom-color: var(--nebula-text-4);
+}
+
+/* External link */
+.external-link,
+.cm-link {
+  color: var(--nebula-text-0);
+  text-decoration: none;
+  border-bottom: 1px solid var(--nebula-text-4);
+}
+
+.external-link:hover,
+.cm-link:hover {
+  color: var(--nebula-accent);
+  border-bottom-color: var(--nebula-accent);
+}
+
+/* Lists */
+.markdown-preview-view ul,
+.markdown-preview-view ol {
+  padding-left: 22px;
+  margin: 0 0 14px;
+}
+
+.markdown-preview-view li {
+  margin-bottom: 4px;
+}
+
+.markdown-preview-view li::marker {
+  color: var(--nebula-text-3);
+}
+
+/* ==========================================================================
+   Task list — round accent-filled checkbox
+   ========================================================================== */
+
+.markdown-preview-view input[type="checkbox"],
+.markdown-source-view.mod-cm6 input[type="checkbox"],
+.task-list-item-checkbox,
+input.task-list-item-checkbox {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid var(--nebula-text-3) !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  margin: 3px 10px 0 0;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+  flex: none;
+  vertical-align: middle;
+}
+
+.markdown-preview-view input[type="checkbox"]:hover,
+.task-list-item-checkbox:hover,
+input.task-list-item-checkbox:hover {
+  border-color: var(--nebula-text-2) !important;
+}
+
+.markdown-preview-view input[type="checkbox"]:checked,
+.task-list-item-checkbox:checked,
+input.task-list-item-checkbox:checked {
+  background-color: var(--nebula-accent) !important;
+  border-color: var(--nebula-accent) !important;
+  /* crisp centered ✓ rendered as an SVG mask */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'><polyline points='5 12.5 10 17.5 19 7.5'/></svg>") !important;
+  background-size: 12px 12px !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Clear any default Obsidian ::after/::before that might render a second mark */
+.task-list-item-checkbox:checked::after,
+.task-list-item-checkbox:checked::before,
+.markdown-preview-view input[type="checkbox"]:checked::after,
+.markdown-preview-view input[type="checkbox"]:checked::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Completed-task strikethrough — coral accent, matches reference */
+.markdown-preview-view li.task-list-item.is-checked,
+.markdown-preview-view li[data-task="x"],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task="x"],
+.markdown-source-view.mod-cm6 .cm-line:has(input.task-list-item-checkbox:checked) {
+  color: var(--nebula-text-2);
+  text-decoration: line-through;
+  text-decoration-color: var(--nebula-accent);
+  text-decoration-thickness: 1.5px;
+}
+
+/* ==========================================================================
+   Inline code, code blocks
+   ========================================================================== */
+
+.markdown-preview-view code,
+.cm-inline-code {
+  font-family: var(--font-monospace-theme);
+  font-size: 0.88em;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--nebula-border);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--nebula-code-str);
+}
+
+.markdown-preview-view pre {
+  background: var(--nebula-bg-2);
+  border: 1px solid var(--nebula-border);
+  border-radius: var(--callout-radius);
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+
+.markdown-preview-view pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--nebula-text-1);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Syntax tokens (Prism-style classes Obsidian uses) */
+.markdown-preview-view .token.keyword,
+.markdown-preview-view .token.boolean,
+.markdown-preview-view .token.null {
+  color: var(--nebula-code-kw);
+}
+
+.markdown-preview-view .token.string,
+.markdown-preview-view .token.regex,
+.markdown-preview-view .token.attr-value {
+  color: var(--nebula-code-str);
+}
+
+.markdown-preview-view .token.comment {
+  color: var(--nebula-code-comment);
+  font-style: italic;
+}
+
+.markdown-preview-view .token.function,
+.markdown-preview-view .token.class-name {
+  color: var(--nebula-code-fn);
+}
+
+.markdown-preview-view .token.operator,
+.markdown-preview-view .token.punctuation {
+  color: var(--nebula-text-2);
+}
+
+.markdown-preview-view .token.number {
+  color: var(--nebula-code-str);
+}
+
+/* ==========================================================================
+   Blockquote — serif italic with accent-dim left bar
+   ========================================================================== */
+
+.markdown-preview-view blockquote,
+.cm-blockquote {
+  margin: 18px 0;
+  padding: 2px 0 2px 16px;
+  border-left: 3px solid var(--nebula-accent-dim);
+  color: var(--nebula-text-0);
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 17px;
+  font-style: italic;
+  background: transparent;
+}
+
+/* ==========================================================================
+   Tag pills
+   ========================================================================== */
+
+a.tag,
+.cm-hashtag {
+  color: var(--nebula-accent);
+  background: var(--nebula-accent-soft);
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+}
+
+a.tag:hover {
+  background: var(--nebula-accent-soft);
+  color: var(--nebula-accent);
+  text-decoration: none;
+}
+
+.cm-hashtag-begin {
+  border-radius: 999px 0 0 999px;
+  padding-left: 8px;
+}
+
+.cm-hashtag-end {
+  border-radius: 0 999px 999px 0;
+  padding-right: 8px;
+}
+
+/* ==========================================================================
+   Callouts — left accent border, subtle gradient top
+   ========================================================================== */
+
+.callout {
+  border: 1px solid var(--nebula-border-strong);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  border-left: 3px solid var(--nebula-accent);
+  border-radius: var(--callout-radius);
+  padding: 14px 18px;
+  margin: 18px 0;
+  mix-blend-mode: normal;
+  --callout-color: var(--nebula-accent-rgb);
+}
+
+.callout-title {
+  color: var(--nebula-accent);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0;
+  margin-bottom: 6px;
+}
+
+.callout-title-inner {
+  color: inherit;
+}
+
+.callout-icon {
+  color: var(--nebula-accent);
+}
+
+.callout-content {
+  padding: 0;
+}
+
+.callout-content p {
+  margin: 0;
+}
+
+/* Neutral / info / note variants */
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"] {
+  border-left-color: var(--nebula-text-3);
+}
+
+.callout[data-callout="note"] .callout-title,
+.callout[data-callout="info"] .callout-title,
+.callout[data-callout="abstract"] .callout-title,
+.callout[data-callout="summary"] .callout-title,
+.callout[data-callout="note"] .callout-icon,
+.callout[data-callout="info"] .callout-icon,
+.callout[data-callout="abstract"] .callout-icon,
+.callout[data-callout="summary"] .callout-icon {
+  color: var(--nebula-text-1);
+}
+
+.callout[data-callout="success"],
+.callout[data-callout="done"],
+.callout[data-callout="check"] {
+  border-left-color: var(--nebula-sync-green);
+}
+
+.callout[data-callout="success"] .callout-title,
+.callout[data-callout="done"] .callout-title,
+.callout[data-callout="check"] .callout-title,
+.callout[data-callout="success"] .callout-icon,
+.callout[data-callout="done"] .callout-icon,
+.callout[data-callout="check"] .callout-icon {
+  color: var(--nebula-sync-green);
+}
+
+/* ==========================================================================
+   Embedded note — card-style
+   ========================================================================== */
+
+.markdown-embed,
+.internal-embed {
+  border: 1px solid var(--nebula-border-strong);
+  border-radius: var(--callout-radius);
+  padding: 14px 16px;
+  margin: 18px 0;
+  background: var(--nebula-bg-1);
+}
+
+.markdown-embed-title {
+  font-size: 15px;
+  color: var(--nebula-text-0);
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.markdown-embed-link {
+  color: var(--nebula-accent);
+}
+
+/* ==========================================================================
+   Status bar
+   ========================================================================== */
+
+.status-bar {
+  background: var(--nebula-bg-1);
+  border-top: 1px solid var(--nebula-border);
+  padding: 0 14px;
+  font-size: 11px;
+  color: var(--nebula-text-3);
+  font-variant-numeric: tabular-nums;
+  height: 26px;
+}
+
+.status-bar-item {
+  color: var(--nebula-text-3);
+  padding: 0 7px;
+}
+
+/* ==========================================================================
+   Graph view
+   ========================================================================== */
+
+.graph-view.color-circle {
+  color: var(--nebula-text-3);
+}
+
+.graph-view.color-fill {
+  color: var(--nebula-text-1);
+}
+
+.graph-view.color-fill-tag {
+  color: var(--nebula-accent);
+}
+
+.graph-view.color-fill-focused {
+  color: var(--nebula-accent);
+}
+
+.graph-view.color-line {
+  color: var(--nebula-text-4);
+}
+
+.graph-view.color-text {
+  color: var(--nebula-text-1);
+}
+
+.graph-view.color-fill-highlight {
+  color: var(--nebula-accent);
+}
+
+/* Local graph panel surface */
+.graph-view-container {
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--nebula-glow) 40%, transparent), transparent 70%),
+    var(--nebula-bg-2);
+  border: 1px solid var(--nebula-border);
+  border-radius: var(--callout-radius);
+}
+
+/* ==========================================================================
+   Backlinks pane
+   ========================================================================== */
+
+.backlink-pane .search-result,
+.search-result {
+  background: var(--nebula-bg-2);
+  border: 1px solid var(--nebula-border);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  padding: 8px 10px;
+}
+
+.backlink-pane .tree-item-inner,
+.search-result-file-title {
+  color: var(--nebula-accent);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.search-result-file-matched-text {
+  color: var(--nebula-text-0);
+  background: var(--nebula-accent-soft);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Modals & menus
+   ========================================================================== */
+
+.modal,
+.suggestion-container,
+.menu {
+  background: var(--nebula-bg-1);
+  border: 1px solid var(--nebula-border-strong);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.menu-item {
+  border-radius: 6px;
+  color: var(--nebula-text-1);
+}
+
+.menu-item:hover,
+.menu-item.selected {
+  background: var(--nebula-accent-soft);
+  color: var(--nebula-text-0);
+}
+
+.suggestion-item.is-selected {
+  background: var(--nebula-accent-soft);
+  color: var(--nebula-text-0);
+}
+
+/* kbd hints */
+kbd,
+.suggestion-hotkey {
+  font-family: var(--font-monospace-theme);
+  font-size: 10.5px;
+  color: var(--nebula-text-3);
+  padding: 2px 5px;
+  border: 1px solid var(--nebula-border-strong);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+button,
+.clickable-icon,
+.mod-cta {
+  border-radius: 6px;
+}
+
+button.mod-cta,
+.mod-cta {
+  background: var(--nebula-accent);
+  color: #ffffff;
+}
+
+button.mod-cta:hover,
+.mod-cta:hover {
+  background: var(--nebula-accent);
+  filter: brightness(1.08);
+}
+
+.clickable-icon {
+  color: var(--nebula-text-2);
+}
+
+.clickable-icon:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--nebula-text-0);
+}
+
+/* ==========================================================================
+   Scrollbars
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.theme-light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.theme-light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+/* ==========================================================================
+   Selection
+   ========================================================================== */
+
+::selection {
+  background: var(--nebula-accent-soft);
+  color: var(--nebula-text-0);
+}
+
+/* ==========================================================================
+   Workspace vignette / window chrome
+   ========================================================================== */
+
+.app-container,
+.workspace {
+  border-radius: 0;
+}
+
+.titlebar {
+  background: var(--nebula-bg-1);
+  border-bottom: 1px solid var(--nebula-border);
+}
+
+.titlebar-text {
+  font-size: 12px;
+  color: var(--nebula-text-2);
+  letter-spacing: 0.04em;
+}
