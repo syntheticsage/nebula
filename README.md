@@ -64,7 +64,12 @@ Then enable the snippet under Settings → Appearance → CSS snippets.
 
 ## Credits
 
-Designed and built by **Yogesh Patil**. Aesthetic direction inspired by minimal, plum-accented note-taking interfaces.
+Designed and built by **Yogesh Patil**. All CSS in `theme.css` is original
+and does not copy code from other Obsidian themes. Aesthetic direction
+inspired by minimal, plum-accented note-taking interfaces.
+
+Bundled fonts are licensed separately under the SIL OFL — see
+[`fonts/LICENSES.md`](fonts/LICENSES.md) for attribution.
 
 ## License
 

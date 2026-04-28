@@ -313,8 +313,8 @@ body.theme-light {
 .theme-light .workspace-leaf-content[data-type="markdown"],
 .theme-light .workspace-leaf-content[data-type="empty"] {
   background:
-    radial-gradient(1100px 700px at 18% 22%, color-mix(in oklab, var(--nebula-glow) 55%, transparent), transparent 60%),
-    radial-gradient(900px 600px at 82% 78%, color-mix(in oklab, var(--nebula-accent) 10%, transparent), transparent 60%),
+    radial-gradient(1100px 700px at 18% 22%, color-mix(in srgb, var(--nebula-glow) 55%, transparent), transparent 60%),
+    radial-gradient(900px 600px at 82% 78%, color-mix(in srgb, var(--nebula-accent) 10%, transparent), transparent 60%),
     var(--nebula-bg-0);
 }
 
@@ -334,8 +334,8 @@ body.theme-light {
 .theme-dark .workspace,
 .theme-light .workspace {
   background:
-    radial-gradient(1100px 700px at 18% 22%, color-mix(in oklab, var(--nebula-glow) 55%, transparent), transparent 60%),
-    radial-gradient(900px 600px at 82% 78%, color-mix(in oklab, var(--nebula-accent) 10%, transparent), transparent 60%),
+    radial-gradient(1100px 700px at 18% 22%, color-mix(in srgb, var(--nebula-glow) 55%, transparent), transparent 60%),
+    radial-gradient(900px 600px at 82% 78%, color-mix(in srgb, var(--nebula-accent) 10%, transparent), transparent 60%),
     var(--nebula-bg-0);
 }
 
@@ -1026,7 +1026,7 @@ a.tag:hover {
 /* Local graph panel surface */
 .graph-view-container {
   background:
-    radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--nebula-glow) 40%, transparent), transparent 70%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--nebula-glow) 40%, transparent), transparent 70%),
     var(--nebula-bg-2);
   border: 1px solid var(--nebula-border);
   border-radius: var(--callout-radius);
@@ -1308,9 +1308,9 @@ button.mod-cta:hover,
   display: flex;
   flex-direction: column;
   gap: 8px;
-  /* Reserve scrollbar gutter symmetrically so the card stays centred whether
-     the scrollbar is shown or not. */
-  scrollbar-gutter: stable both-edges;
+  /* Reserve scrollbar gutter on the right only — `stable both-edges` would
+     consume too much horizontal width on Windows where scrollbars are 16px. */
+  scrollbar-gutter: stable;
 }
 
 .tasknotes-plugin .kanban-view__cards::-webkit-scrollbar {
