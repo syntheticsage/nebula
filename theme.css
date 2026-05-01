@@ -1242,8 +1242,8 @@ button.mod-cta:hover,
 }
 
 .theme-light .tasknotes-plugin .kanban-view__column {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.045);
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .tasknotes-plugin .kanban-view__column--column-drop-target,
@@ -1307,10 +1307,10 @@ button.mod-cta:hover,
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  /* Reserve scrollbar gutter on the right only — `stable both-edges` would
-     consume too much horizontal width on Windows where scrollbars are 16px. */
-  scrollbar-gutter: stable;
+  gap: 12px;
+  /* Reserve scrollbar space symmetrically. With our 6px webkit scrollbar
+     override below, this only costs ~12px of column width total. */
+  scrollbar-gutter: stable both-edges;
 }
 
 .tasknotes-plugin .kanban-view__cards::-webkit-scrollbar {
@@ -1345,8 +1345,8 @@ button.mod-cta:hover,
 
 .theme-light .tasknotes-plugin .task-card {
   background: #ffffff;
-  border-color: rgba(0, 0, 0, 0.12);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.14);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(0, 0, 0, 0.04);
 }
 
 .tasknotes-plugin .task-card:hover {
