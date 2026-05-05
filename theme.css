@@ -1462,13 +1462,14 @@ button.mod-cta:hover,
   color: var(--nebula-col-review);
 }
 
-/* Metadata row — dashed top rule, muted tone, items wrap horizontally */
+/* Metadata row — dashed top rule, muted tone, items wrap horizontally
+   into their own rows. Tighter row gap so properties don't feel airy. */
 .tasknotes-plugin .task-card__metadata {
   display: flex;
-  align-items: center;
-  gap: 6px 12px;
-  flex-wrap: wrap;
-  padding-top: 8px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 3px;
+  padding-top: 6px;
   margin-top: 6px;
   border-top: 1px dashed var(--nebula-border);
   font-size: 11.5px;
@@ -1478,7 +1479,6 @@ button.mod-cta:hover,
 
 .tasknotes-plugin .task-card__metadata-item,
 .tasknotes-plugin .task-card__metadata-date,
-.tasknotes-plugin .task-card__metadata-property,
 .tasknotes-plugin .task-card__due-date {
   display: inline-flex !important;
   align-items: center;
@@ -1486,6 +1486,26 @@ button.mod-cta:hover,
   color: var(--nebula-text-3);
   white-space: nowrap;
   font-size: 11.5px;
+}
+
+/* Generic metadata property — sits on its own row, allows inner content
+   (tags, long file names) to wrap so it doesn't get clipped */
+.tasknotes-plugin .task-card__metadata-property {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  color: var(--nebula-text-3);
+  font-size: 11.5px;
+  min-width: 0;
+  white-space: normal;
+}
+
+/* But the date variants keep their content on one line — short enough */
+.tasknotes-plugin .task-card__metadata-property.task-card__metadata-date,
+.tasknotes-plugin .task-card__metadata-date {
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 /* Hide the verbose key labels ("due:", "scheduled:", "file tags:",
@@ -1683,19 +1703,130 @@ button.mod-cta:hover,
   color: var(--nebula-col-in-progress);
 }
 
-/* Chevron / subtask expansion */
+/* --- Subtasks: Option 04 — collapsible group ----------------------------
+   Design reference: design_handoff_obsidian_kanban/Subtask Designs.html
+   The chevron lives on the parent card; clicking it expands
+   .task-card__subtasks which we treat as a self-contained bordered group
+   (.o4-group equivalent). Nested .task-card--subtask rows read as a
+   checklist instead of mini-cards. */
+
+/* Chevron — always visible (not just on hover) so users see the affordance */
 .tasknotes-plugin .task-card__chevron {
   color: var(--nebula-text-3);
+  opacity: 1 !important;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  transition: color 120ms ease, transform 150ms ease, background 120ms ease;
+}
+
+.tasknotes-plugin .task-card__chevron:hover {
+  color: var(--nebula-accent);
+  background: var(--nebula-accent-soft);
 }
 
 .tasknotes-plugin .task-card__chevron--expanded {
   color: var(--nebula-text-1);
 }
 
+/* Subtasks group container — bordered, slightly recessed, breathing room */
 .tasknotes-plugin .task-card__subtasks {
-  border-top: 1px dashed var(--nebula-border);
-  margin-top: 8px;
-  padding-top: 8px;
+  margin: 8px 0 0 !important;
+  padding: 0 !important;
+  border: 1px solid var(--nebula-border);
+  border-left: 1px solid var(--nebula-border) !important;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.theme-light .tasknotes-plugin .task-card__subtasks {
+  background: rgba(0, 0, 0, 0.025);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Suppress TaskNotes' default left-rail decoration on the group (we have
+   a full border now, the rail would double-up) */
+.tasknotes-plugin .task-card__subtasks::before {
+  display: none !important;
+}
+
+/* Nested subtasks — render as checklist rows, not mini-cards */
+.tasknotes-plugin .task-card__subtasks .task-card--subtask,
+.tasknotes-plugin .task-card__subtasks .task-card {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 5px 12px !important;
+  margin: 0 !important;
+  position: relative;
+  font-size: 12px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tasknotes-plugin .task-card__subtasks .task-card--subtask + .task-card--subtask {
+  border-top: 1px solid var(--nebula-border) !important;
+}
+
+.theme-light .tasknotes-plugin .task-card__subtasks .task-card--subtask + .task-card--subtask {
+  border-top-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Hide priority rail / shadow on nested subtask rows */
+.tasknotes-plugin .task-card__subtasks .task-card--subtask::before {
+  display: none !important;
+}
+
+.tasknotes-plugin .task-card__subtasks .task-card--subtask:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.theme-light .tasknotes-plugin .task-card__subtasks .task-card--subtask:hover {
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Subtask title — inherits the row's font sizing */
+.tasknotes-plugin .task-card__subtasks .task-card__title,
+.tasknotes-plugin .task-card__subtasks .task-card__title-text {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: var(--nebula-text-1) !important;
+  letter-spacing: 0;
+}
+
+/* Completed subtask — strikethrough in accent-dim */
+.tasknotes-plugin .task-card__subtasks .task-card--completed .task-card__title,
+.tasknotes-plugin .task-card__subtasks .task-card--completed .task-card__title-text {
+  color: var(--nebula-text-3) !important;
+  text-decoration: line-through;
+  text-decoration-color: var(--nebula-accent-dim);
+  text-decoration-thickness: 1px;
+}
+
+/* Round outline checkbox dot for subtask rows (the design's .o4-mini) */
+.tasknotes-plugin .task-card__subtasks .task-card__status-dot {
+  width: 11px !important;
+  height: 11px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid var(--nebula-text-3) !important;
+  background: transparent !important;
+  margin: 0 !important;
+}
+
+.tasknotes-plugin .task-card__subtasks .task-card--completed .task-card__status-dot {
+  background: var(--nebula-accent) !important;
+  border-color: var(--nebula-accent) !important;
+}
+
+/* Hide the subtask row's verbose metadata so the row reads as one line */
+.tasknotes-plugin .task-card__subtasks .task-card__metadata,
+.tasknotes-plugin .task-card__subtasks .task-card__chevron,
+.tasknotes-plugin .task-card__subtasks .task-card__quick-actions {
+  display: none !important;
 }
 
 /* Project indicator / link */
