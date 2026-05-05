@@ -1388,6 +1388,58 @@ button.mod-cta:hover,
   padding-left: 10px;
 }
 
+/* --- EXPERIMENTAL: top gradient cover bar (per design) ----------------
+   Renders the 6px gradient strip at the top of cards that the Kanban
+   design shows on featured cards. Tinted by priority/status. */
+.tasknotes-plugin .task-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(90deg, var(--nebula-accent), var(--nebula-col-warm));
+  opacity: 0;
+  transition: opacity 120ms ease;
+  pointer-events: none;
+}
+
+/* Show cover bar based on priority / state */
+.tasknotes-plugin .task-card--priority-high::before {
+  opacity: 1;
+  background: linear-gradient(90deg, var(--nebula-accent), var(--nebula-col-warm));
+}
+
+.tasknotes-plugin .task-card--priority-medium::before {
+  opacity: 1;
+  background: linear-gradient(90deg, var(--nebula-col-in-progress), var(--nebula-col-review));
+}
+
+.tasknotes-plugin .task-card--actively-tracked::before {
+  opacity: 1;
+  background: linear-gradient(90deg, var(--nebula-accent), var(--nebula-col-in-progress));
+}
+
+.tasknotes-plugin .task-card--completed::before {
+  opacity: 1;
+  background: linear-gradient(90deg, var(--nebula-col-completed), var(--nebula-col-review));
+}
+
+/* Suppress the cover bar on nested subtask rows */
+.tasknotes-plugin .task-card__subtasks .task-card::before {
+  display: none !important;
+}
+
+/* When the cover bar is present, push internal padding down a bit so
+   the labels/title don't sit right under the gradient */
+.tasknotes-plugin .task-card--priority-high,
+.tasknotes-plugin .task-card--priority-medium,
+.tasknotes-plugin .task-card--actively-tracked,
+.tasknotes-plugin .task-card--completed {
+  padding-top: 14px;
+}
+
 /* Title */
 .tasknotes-plugin .task-card__title,
 .tasknotes-plugin .task-card__title-text {
