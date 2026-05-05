@@ -1413,14 +1413,27 @@ button.mod-cta:hover,
   gap: 6px;
 }
 
-/* Status / priority dots on the card */
-.tasknotes-plugin .task-card__status-dot,
-.tasknotes-plugin .task-card__priority-dot {
+/* Status / priority dots on the card.
+   Design uses a single dot per card. TaskNotes renders both:
+   ○ status (clickable toggle) + ● priority. Hide the priority dot —
+   the priority left-rail (.task-card--priority-high border-left) and
+   the priority badge already convey priority more clearly. */
+.tasknotes-plugin .task-card__status-dot {
   width: 10px !important;
   height: 10px !important;
   border-radius: 50%;
   flex: none;
   margin-top: 4px;
+}
+
+.tasknotes-plugin .task-card__priority-dot {
+  display: none !important;
+}
+
+/* On nested subtask rows we already hide everything except the title;
+   subtask rows still get their status dot as a checkbox. */
+.tasknotes-plugin .task-card__subtasks .task-card__priority-dot {
+  display: none !important;
 }
 
 /* Priority + label badges — small uppercase pills like the design's
@@ -1508,11 +1521,14 @@ button.mod-cta:hover,
   white-space: nowrap;
 }
 
-/* Hide the verbose key labels ("due:", "scheduled:", "file tags:",
-   "file name:") so the value alone reads cleanly — matches the design's
-   icon + value pattern. */
-.tasknotes-plugin .task-card__metadata-property .task-card__metadata-key {
-  display: none;
+/* Hide the unclassed label span TaskNotes prepends inside each metadata
+   property ("file tags: ", "file name: ", etc.). The label is always the
+   FIRST child <span> with no class; the value is in .task-card__metadata-value.
+   This rule does not affect dates — those bake the label into textContent
+   on the element itself, which can only be removed via TaskNotes' own
+   property-label settings. */
+.tasknotes-plugin .task-card__metadata-property > span:first-child:not(.task-card__metadata-value):not(.tag):not(.task-card__metadata-pill):not(.task-card__progress) {
+  display: none !important;
 }
 
 /* Keep the value visible and let it inherit colour from the property
