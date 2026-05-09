@@ -57,10 +57,30 @@ Nebula exposes its palette as CSS variables under `.theme-dark` and `.theme-ligh
 
 Then enable the snippet under Settings → Appearance → CSS snippets.
 
+## Use Nebula's look on top of Baseline
+
+If you love [Baseline's](https://github.com/aaaaalexis/obsidian-baseline) structure
+and Style Settings depth but want Nebula's plum-and-coral identity, you don't have
+to choose. Nebula ships a companion snippet at
+[`compat/nebula-on-baseline.css`](compat/nebula-on-baseline.css) that repaints
+Baseline with the Nebula palette, typography, radial-glow background, and
+TaskNotes Kanban card styling.
+
+1. Set Baseline as your active theme (Settings → Appearance → Themes).
+2. Copy `compat/nebula-on-baseline.css` into `<YourVault>/.obsidian/snippets/`.
+3. Enable the snippet under Settings → Appearance → CSS snippets.
+
+You keep Baseline's Style Settings panel for structure, density, and layout;
+Nebula drives the colors and feel. Reset any Baseline color overrides in Style
+Settings if you want the snippet's palette to fully come through.
+
 ## Compatibility
 
 - Requires Obsidian **1.4.0** or newer
 - Supports both dark and light modes
+- `compat/nebula-on-baseline.css` is built against Baseline's current variable
+  system; if Baseline renames `--color-base-*` or its accent variables, the
+  snippet will need a small update.
 
 ## Credits
 
